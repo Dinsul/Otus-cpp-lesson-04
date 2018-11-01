@@ -13,7 +13,7 @@ auto print_ip(std::string ip)
 {
     std::cout << ip;
 
-    return ip.length();
+    return ip.find('.') + 1;
 }
 
 /**
