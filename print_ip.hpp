@@ -4,6 +4,14 @@
 #include <type_traits>
 #include <tuple>
 
+/** @file */
+
+/**
+ * @addtogroup PRINT_TAMPLATES
+ * @brief Набор шаблонных функций для вывода ip-адресов
+ *
+ * @{
+ */
 
 /**
  * @brief print_ip Выводит ip-адрес на стандартный вывод
@@ -132,3 +140,5 @@ size_t print_ip(T first, Args ... args)
 
     return print_ip(args...);
 }
+
+/** @} */
