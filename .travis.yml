@@ -2,7 +2,7 @@ language: cpp
 compiler: clang
 before_script:
 - sudo apt-get update
-- sudo apt-get install libboost-test-dev doxygen dot -y
+- sudo apt-get install libboost-test-dev doxygen graphviz -y
 script:
 - cmake .
 - cmake --build .
