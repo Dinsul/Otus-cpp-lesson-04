@@ -50,4 +50,4 @@ include (CPack)
 
 enable_testing()
 
-add_test(test_split test_${PROJECT_NAME})
+add_test(test_print test_${PROJECT_NAME})
