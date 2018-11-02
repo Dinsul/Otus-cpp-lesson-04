@@ -17,19 +17,8 @@ deploy:
   local-dir: doc/html
   on:
     branch: master
-#deploy:
-#  provider: script
-#  skip_cleanup: true
-#  script:
-#  - curl -T print_ip-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -udinsul:$BINTRAY_API_KEY "https://api.bintray.com/content/alpha/homeworks/package/$TRAVIS_BUILD_NUMBER/print_ip-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
 deploy:
-  provider: bintray
-  file: print_ip-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb
-  user: dinsul
-  key: $BINTRAY_API_KEY
-#  passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
-  repo: homeworks
-  name: package
-  skip_cleanup: true # to upload artifacts created during the build
-  on:
-    branch: master
+  provider: script
+  skip_cleanup: true
+  script:
+  - curl -T print_ip-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -udinsul:$BINTRAY_API_KEY "https://api.bintray.com/content/alpha/homeworks/package/$TRAVIS_BUILD_NUMBER/print_ip-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
