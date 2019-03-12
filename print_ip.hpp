@@ -13,6 +13,53 @@
  * @{
  */
 
+
+template <size_t pos, class ... Args>
+struct print_tuple
+{
+    static void print(std::tuple<Args ...> ip)
+    {
+        print_tuple<pos - 1, Args ...>::print(ip);
+        std::cout << std::get<pos>(ip)
+                  << (std::tuple_size<decltype(ip)>::value - 1 == pos ? "" : ".");
+    }
+};
+
+template <class ... Args>
+struct print_tuple <0, Args ...>
+{
+    static void print(std::tuple<Args ...> ip)
+    {
+        std::cout << std::get<0>(ip)
+                  << (std::tuple_size<decltype(ip)>::value == 1 ? "" : ".");
+    }
+};
+
+/**
+ * @brief print_ip Перегрузка для вывода кортежей
+ * @param ip Кортеж из одинаковых типов,
+ * которые могут быть выведены с помощью std::cout
+ * @return
+ */
+template <class ... Args>
+auto print_ip(std::tuple<Args ...> ip)
+{
+    print_tuple<std::tuple_size<decltype(ip)>::value - 1, Args ...>::print(ip);
+
+    return std::tuple_size<decltype(ip)>::value;
+}
+
+//template <class T>
+//size_t print_ip(std::tuple<T, T, T, T> ip)
+//{
+//    std::cout << std::get<0>(ip) << '.'
+//              << std::get<1>(ip) << '.'
+//              << std::get<2>(ip) << '.'
+//              << std::get<3>(ip);
+//    return 4;
+//}
+
+
 /**
  * @brief print_ip Выводит ip-адрес на стандартный вывод
  * @param ip ip-адрес
@@ -24,21 +71,6 @@ auto print_ip(std::string ip)
     return ip.find('.') + 1;
 }
 
-/**
- * @brief print_ip Перегрузка для вывода кортежей
- * @param ip Кортеж из одинаковых типов,
- * которые могут быть выведены с помощью std::cout
- * @return
- */
-template <class T>
-size_t print_ip(std::tuple<T, T, T, T> ip)
-{
-    std::cout << std::get<0>(ip) << '.'
-              << std::get<1>(ip) << '.'
-              << std::get<2>(ip) << '.'
-              << std::get<3>(ip);
-    return 4;
-}
 
 /**
  * @brief The print_ip_internal class
@@ -50,7 +82,7 @@ class print_ip_internal
 public:
     auto operator ()(T ip)
     {
-        decltype(sizeof(T)) i;
+        size_t i;
         auto length = sizeof(T);
 
         for (i = 0; i < length; ++i)
@@ -68,7 +100,7 @@ public:
 };
 
 /**
- * @brief The print_ip_internal<_Tp1, T> class
+ * @brief The print_ip_internal<T> class
  * Выводит контейнеры
  */
 template <typename T>
@@ -122,7 +154,7 @@ size_t print_ip_last(T last, Args ... )
 }
 
 /**
- * @brief print_ip Побочная перегрузка с переменным числом параметров
+ * @brief print_ip Побная перегрузка с переменным числом параметров
  * @param args Любой тип который выводится с помощью std::cout
  * @return
  */

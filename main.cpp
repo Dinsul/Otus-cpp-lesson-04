@@ -8,10 +8,10 @@ int main (int, char**)
     std::vector<int> vec{192, 168, 1, 1};
     std::list<int> lis{122,255,255,0};
 
-    print_ip((char)-1);
+    print_ip(static_cast<char>(-1));
     std::cout << std::endl;
 
-    print_ip((short)0);
+    print_ip(static_cast<short>(0));
     std::cout << std::endl;
 
     print_ip(2130706433);
@@ -32,8 +32,12 @@ int main (int, char**)
     print_ip(std::make_tuple("222","33","44","55"));
     std::cout << std::endl;
 
-    print_ip(std::make_tuple(22, 0xFA, 144, 55));
+    print_ip(std::make_tuple(22, 0xFA, 144, "55"));
     std::cout << std::endl;
+
+    print_ip(std::make_tuple("localhost", "=)"));
+    std::cout << std::endl;
+
 
     //Случайно получилось сделать print_ip с
     //переменным количеством аргументов
